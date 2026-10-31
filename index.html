@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>一千零一夜</title>
+<meta name="description" content="一款增量放置塔防游戏：在基地周围规划防御，渡过末日后的一千个夜晚，看见新世界的曙光。" />
+<meta name="theme-color" content="#080a16" />
+
+<!-- 图标：SVG 为主，PNG 兜底（Safari / 旧版主屏） -->
+<link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+<link rel="alternate icon" type="image/png" sizes="192x192" href="./icon-192.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />
+<link rel="mask-icon" href="./favicon.svg" color="#ffd28a" />
+
+<!-- 社交分享卡片 -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="一千零一夜" />
+<meta property="og:description" content="渡过末日后的一千个夜晚，看见新世界的曙光。" />
+<meta property="og:image" content="./icon-512.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="一千零一夜" />
+<meta name="twitter:image" content="./icon-512.png" />
+  <script type="module" crossorigin src="./assets/index-D4YGtX2q.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BkHJi_4x.css">
+</head>
+<body>
+<!-- ───────── 封面 ───────── -->
+<section id="cover" class="cover" aria-label="一千零一夜">
+  <svg class="cv-sky" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="cvSky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="#05060f"/>
+        <stop offset="38%"  stop-color="#090c1a"/>
+        <stop offset="68%"  stop-color="#10142b"/>
+        <stop offset="100%" stop-color="#1b1936"/>
+      </linearGradient>
+      <radialGradient id="cvMilky" cx="50%" cy="50%" r="50%">
+        <stop offset="0%"   stop-color="#8f8cff" stop-opacity=".16"/>
+        <stop offset="55%"  stop-color="#4d58b8" stop-opacity=".07"/>
+        <stop offset="100%" stop-color="#4d58b8" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="cvGold" cx="50%" cy="50%" r="50%">
+        <stop offset="0%"   stop-color="#ffd88f" stop-opacity=".26"/>
+        <stop offset="55%"  stop-color="#ffb35c" stop-opacity=".07"/>
+        <stop offset="100%" stop-color="#ffb35c" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="cvMoonHalo" cx="50%" cy="50%" r="50%">
+        <stop offset="0%"   stop-color="#fff3d0" stop-opacity=".22"/>
+        <stop offset="100%" stop-color="#fff3d0" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="cvMoonBody" cx="38%" cy="34%" r="70%">
+        <stop offset="0%"   stop-color="#fffae8"/>
+        <stop offset="72%"  stop-color="#e6dcc0"/>
+        <stop offset="100%" stop-color="#c8b995"/>
+      </radialGradient>
+      <linearGradient id="cvFar" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="#2a2450"/>
+        <stop offset="100%" stop-color="#1a1734"/>
+      </linearGradient>
+      <linearGradient id="cvMid" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="#17142c"/>
+        <stop offset="100%" stop-color="#0e0c1c"/>
+      </linearGradient>
+      <linearGradient id="cvNear" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="#0b0917"/>
+        <stop offset="100%" stop-color="#04040a"/>
+      </linearGradient>
+      <linearGradient id="cvMistG" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="#6f6ac8" stop-opacity="0"/>
+        <stop offset="60%"  stop-color="#7d76d8" stop-opacity=".14"/>
+        <stop offset="100%" stop-color="#7d76d8" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+
+    <rect width="1200" height="800" fill="url(#cvSky)"/>
+    <ellipse cx="600" cy="290" rx="620" ry="140" fill="url(#cvMilky)" transform="rotate(-13 600 290)"/>
+
+    <!-- 月 -->
+    <g class="cv-moon">
+      <circle cx="946" cy="146" r="110" fill="url(#cvMoonHalo)"/>
+      <circle cx="946" cy="146" r="26" fill="url(#cvMoonBody)"/>
+    </g>
+
+    <!-- 星群（JS 填充） -->
+    <g class="cv-stars" id="cv-stars"></g>
+    <g class="cv-bright">
+      <circle cx="176" cy="96"  r="1.9" fill="#fff6dd"/>
+      <circle cx="336" cy="228" r="1.5" fill="#dfe8ff"/>
+      <circle cx="528" cy="84"  r="1.7" fill="#fff6dd"/>
+      <circle cx="726" cy="196" r="1.3" fill="#e8ddff"/>
+      <circle cx="204" cy="322" r="1.2" fill="#dfe8ff"/>
+      <circle cx="1042" cy="318" r="1.6" fill="#fff6dd"/>
+      <circle cx="872" cy="404" r="1.2" fill="#e8ddff"/>
+      <circle cx="112" cy="418" r="1.4" fill="#dfe8ff"/>
+    </g>
+
+    <!-- 标题背后的金色光晕 -->
+    <ellipse class="cv-halo" cx="600" cy="300" rx="430" ry="150" fill="url(#cvGold)"/>
+
+    <!-- ───── 山谷：三层剪影，越远越亮 ─────
+         note: 这三层用【纯色 fill + 独立的 opacity】，不用渐变。
+         渐变在父级 scale 放大后会被采样拉伸，远端山脊会糊成一整块黑。 -->
+    <g class="cv-valley">
+      <path class="cv-far" fill="#312a5e" d="
+        M-40 548 L54 470 L146 508 L242 406 L316 452 L400 366 L468 424 L546 352
+        L624 428 L704 370 L786 448 L864 398 L948 466 L1032 416 L1118 482 L1240 428
+        L1240 800 L-40 800 Z"/>
+      <path class="cv-mid" fill="#1b1838" d="
+        M-40 642 L70 566 L172 606 L266 522 L352 584 L448 502 L534 570 L618 520
+        L710 596 L798 538 L886 606 L978 552 L1064 616 L1158 564 L1240 618
+        L1240 800 L-40 800 Z"/>
+      <rect class="cv-mist" x="-40" y="588" width="1280" height="160" fill="url(#cvMistG)"/>
+      <path class="cv-near" fill="#0a0916" d="
+        M-40 742 C 56 716 148 702 230 718 C 300 732 346 698 418 684
+        C 484 671 526 698 600 704 C 674 710 718 680 788 688
+        C 860 696 916 726 998 716 C 1088 705 1158 696 1240 708
+        L1240 800 L-40 800 Z"/>
+      <g class="cv-fires">
+        <circle cx="586" cy="710" r="1.7" fill="#ffd28a"/>
+        <circle cx="602" cy="715" r="1.1" fill="#ffb35c"/>
+        <circle cx="611" cy="709" r="1.3" fill="#ffe6b0"/>
+        <circle cx="576" cy="717" r="1.0" fill="#ff9a4d"/>
+      </g>
+    </g>
+  </svg>
+
+  <!-- 标题 + 开始 -->
+  <div class="cv-stage">
+    <h1 class="cv-title">
+      <span class="cv-title-cn">一千零一夜</span>
+      <span class="cv-title-en">One Thousand and One Night</span>
+    </h1>
+
+    <div class="cv-cta">
+      <button id="cv-start" class="cv-start" type="button">
+        <span>开 始</span>
+      </button>
+      <p class="cv-hint" id="cv-hint">按任意键也可以</p>
+    </div>
+
+    <!-- 俯冲的消失点，定在山谷中段的凹口上 -->
+    <span id="cv-gap" class="cv-gap" aria-hidden="true"></span>
+  </div>
+
+  <div class="cv-speed" id="cv-speed" aria-hidden="true"></div>
+  <div class="cv-veil" id="cv-veil" aria-hidden="true"></div>
+</section>
+
+<div id="app">
+
+  <!-- ───────── 舞台 ───────── -->
+  <main id="stage">
+    <header id="hud">
+      <div class="hud-left">
+        <div class="hud-day">
+          <span class="lbl">第</span><b id="hud-day">1</b><span class="lbl">夜</span>
+        </div>
+        <div class="hud-sep"></div>
+        <div class="hud-attempt">第 <b id="hud-attempt">1</b> 次</div>
+      </div>
+
+      <div class="hud-center">
+        <div class="hud-time" id="hud-time">00:00</div>
+        <div class="hud-track"><i id="hud-day-progress"></i></div>
+        <div class="speed-box" id="speed-box"></div>
+        <div class="hud-phase p-clean" id="hud-phase">清剿</div>
+      </div>
+
+      <div class="hud-right">
+        <div class="hud-ring" id="hud-ring" title="这一夜还剩多少">
+          <svg viewBox="0 0 40 40">
+            <circle class="hr-track" cx="20" cy="20" r="16"/>
+            <circle class="hr-day" cx="20" cy="20" r="16"
+                    transform="rotate(-90 20 20)" id="hud-ring-day"/>
+            <circle class="hr-fill" cx="20" cy="20" r="16"
+                    transform="rotate(-90 20 20)" id="hud-ring-fill"/>
+            <circle class="hr-core" cx="20" cy="20" r="3.2"/>
+          </svg>
+        </div>
+        <div class="hud-cores" id="hud-cores"></div>
+      </div>
+    </header>
+
+    <div id="scene"></div>
+
+    <!-- ───────── 手机端检视浮层：独占一行，不压地图 ───────── -->
+    <div id="inspect-float" aria-live="polite">
+      <div class="if-body" id="inspect-float-body"></div>
+      <button class="if-close" id="inspect-float-close" type="button" aria-label="退出检视">✕</button>
+    </div>
+
+    <div id="hint"></div>
+    <footer id="dock"></footer>
+
+    <!-- ───────── 手机端底部条形（桌面隐藏） ───────── -->
+    <div id="phone-bar">
+      <div class="pb-res" id="pb-res"></div>
+      <button class="pb-btn" id="phone-echo" title="残响" aria-label="残响面板">
+        <span class="ri-ico ri-ec" id="mri-echo"></span>
+        <b id="mres-echo">0</b>
+      </button>
+      <button class="pb-btn" id="phone-inspect" title="检视" aria-label="检视模式">
+        <svg viewBox="0 0 24 24" class="ico" fill="none" stroke="currentColor" stroke-width="1.7">
+          <circle cx="10.5" cy="10.5" r="5.6"/>
+          <path d="M14.8 14.8 19.5 19.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <button class="pb-btn" id="phone-play" title="播放 / 暂停" aria-label="播放或暂停"></button>
+      <button class="pb-btn" id="phone-drawer" title="面板" aria-label="打开面板">
+        <svg viewBox="0 0 24 24" class="ico" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M4 7h16M4 12h16M4 17h10" stroke-linecap="round"/>
+        </svg>
+        <i class="pb-dot hide" id="phone-drawer-dot"></i>
+      </button>
+      <button class="pb-btn" id="phone-menu-btn" title="菜单" aria-label="菜单">
+        <svg viewBox="0 0 24 24" class="ico" fill="none" stroke="currentColor" stroke-width="1.7">
+          <circle cx="12" cy="5.5" r="1.2" fill="currentColor" stroke="none"/>
+          <circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/>
+          <circle cx="12" cy="18.5" r="1.2" fill="currentColor" stroke="none"/>
+        </svg>
+      </button>
+    </div>
+
+    <div id="result">
+      <div class="res-card">
+        <h2 id="r-title"></h2>
+        <p id="r-sub"></p>
+        <div id="r-kv"></div>
+        <div id="r-btns"></div>
+      </div>
+    </div>
+
+    <!-- ───────── 信标右侧的入口（点信标才出现） ─────────
+         两个按钮上下排开：「残响」在上、「里程碑」在下。
+         里程碑讲的是"这一夜多出了什么"，和"买什么"不是一回事，
+         所以它不该藏进残响面板里再点第二层。 -->
+    <button id="echo-tab" type="button" aria-label="打开残响面板">
+      <span class="et-ico" id="echo-tab-ico"></span>
+      <span class="et-txt">残响</span>
+    </button>
+    <button id="ms-tab" type="button" aria-label="打开里程碑">
+      <span class="et-ico" id="ms-tab-ico"></span>
+      <span class="et-txt">里程碑</span>
+      <span class="et-sub" id="ms-tab-day">第 1 夜</span>
+    </button>
+
+    <!-- ───────── 研究界面（科技树） ───────── -->
+    <div id="research-modal" role="dialog" aria-modal="true" aria-label="研究所" aria-hidden="true">
+      <div class="rs-scrim"></div>
+      <div class="rs-card">
+        <header class="rs-head">
+          <div class="rs-title">
+            <span class="rs-name">研究所</span>
+            <span class="rs-sub">科技树</span>
+          </div>
+          <div class="rs-points">
+            <span>科技点</span><b id="rs-points">0</b>
+          </div>
+          <button class="rs-close" id="rs-close" aria-label="关闭">✕</button>
+        </header>
+
+        <div class="rs-trees" id="rs-trees"></div>
+
+        <div class="rs-body">
+          <div class="rs-canvas">
+            <svg id="rs-svg" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet"></svg>
+          </div>
+          <aside class="rs-detail" id="rs-detail">
+            <div class="rs-hint">选一个科技看看</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <!-- ───────── 残响升级 · 树形弹窗 ─────────
+         和灯塔光环同一套树形语言：圆环节点 + 流动的连线。
+         依赖关系画在边上（加速 → 修复），玩家能看出"先买哪个"。 -->
+    <div id="et-modal" role="dialog" aria-modal="true" aria-label="残响升级" aria-hidden="true">
+      <div class="et-scrim"></div>
+      <div class="et-card lh-card">
+        <header class="rs-head">
+          <div class="rs-title">
+            <span class="rs-name">残响升级</span>
+            <span class="rs-sub">永久买断 · 时间重置不收回</span>
+          </div>
+          <div class="rs-points lh-echo">
+            <span>可支配残响</span><b id="et-echo">0</b>
+          </div>
+          <div class="rs-points lh-level">
+            <span>已解锁</span><b><i id="et-count">0/0</i></b>
+          </div>
+          <button class="rs-close" id="et-close" aria-label="关闭">✕</button>
+        </header>
+
+        <div class="rs-body">
+          <div class="rs-canvas lh-canvas">
+            <svg id="et-svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid meet"></svg>
+          </div>
+          <aside class="rs-detail" id="et-detail">
+            <div class="rs-hint">选一项升级看看</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <!-- ───────── 研究所右侧的操作按钮（选中研究所才出现） ───────── -->
+    <div id="lab-tools" aria-hidden="true">
+      <button class="lt-btn" id="lab-move" type="button">
+        <span class="lt-ico" id="lab-move-ico"></span><span>转移</span>
+      </button>
+      <button class="lt-btn lt-primary" id="lab-open" type="button">
+        <span class="lt-ico" id="lab-open-ico"></span><span>研究</span>
+      </button>
+    </div>
+
+    <!-- ───────── 灯塔（阵列）· 建造与升级 ─────────
+         两棵树：塔身（竖直阶梯，塔身剖面按级长高）+ 光环（三条分支）。
+         和科技树同一套树形 SVG 做法，只是配色走暖金、节点换成塔。 -->
+    <div id="lh-modal" role="dialog" aria-modal="true" aria-label="灯塔" aria-hidden="true">
+      <div class="lh-scrim"></div>
+      <div class="lh-card">
+        <header class="rs-head">
+          <div class="rs-title">
+            <span class="rs-name">灯塔</span>
+            <span class="rs-sub">阵列 · 建造与升级</span>
+          </div>
+          <div class="rs-points lh-echo">
+            <span>可支配残响</span><b id="lh-echo">0</b>
+          </div>
+          <div class="rs-points lh-level">
+            <span>塔身</span><b>Lv.<i id="lh-lv">0</i></b>
+          </div>
+          <button class="rs-close" id="lh-close" aria-label="关闭">✕</button>
+        </header>
+
+        <div class="rs-trees" id="lh-tabs"></div>
+
+        <div class="rs-body">
+          <div class="rs-canvas lh-canvas">
+            <svg id="lh-svg" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid meet"></svg>
+          </div>
+          <aside class="rs-detail" id="lh-detail">
+            <div class="rs-hint">点一级塔身看看</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <!-- ───────── 残响面板：背后是转动的命运之轮 ───────── -->
+    <div id="echo-modal" role="dialog" aria-modal="true" aria-label="残响">
+      <div class="em-scrim"></div>
+
+      <!-- 命运之轮：挂在卡片外面。卡片不透光，轮盘只能从卡片四周露出一圈，
+           所以它必须是 .em-card 的兄弟节点，不能塞进卡片里 -->
+      <div class="em-wheel" aria-hidden="true">
+        <svg viewBox="0 0 400 400">
+          <defs>
+            <radialGradient id="gWheelHalo">
+              <stop offset="0%" stop-color="#ffd892" stop-opacity=".16"/>
+              <stop offset="58%" stop-color="#c98a33" stop-opacity=".07"/>
+              <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <circle cx="200" cy="200" r="196" fill="url(#gWheelHalo)"/>
+          <!-- 三层环：外圈刻度、中圈辐条、内圈符号，反向转速
+               只用纯几何，保证和全局 SVG 图标同一套语言 -->
+          <g class="ew-ring ew-r3">
+            <circle cx="200" cy="200" r="182" fill="none" stroke="currentColor"
+                    stroke-width=".6" opacity=".22" stroke-dasharray="2 10"/>
+            <circle cx="200" cy="200" r="170" fill="none" stroke="currentColor"
+                    stroke-width=".6" opacity=".12"/>
+          </g>
+          <g class="ew-ring ew-r2">
+            <circle cx="200" cy="200" r="150" fill="none" stroke="currentColor"
+                    stroke-width=".8" opacity=".20"/>
+            <g id="ew-spokes" stroke="currentColor" stroke-width=".8" opacity=".26"></g>
+          </g>
+          <g class="ew-ring ew-r1">
+            <circle cx="200" cy="200" r="112" fill="none" stroke="currentColor"
+                    stroke-width=".9" opacity=".30" stroke-dasharray="26 18"/>
+            <circle cx="200" cy="200" r="86" fill="none" stroke="currentColor"
+                    stroke-width=".6" opacity=".18"/>
+          </g>
+          <g id="ew-ticks" stroke="currentColor" stroke-linecap="round"></g>
+        </svg>
+      </div>
+
+      <div class="em-card">
+        <header class="em-head">
+          <div class="em-title">
+            <span class="em-name">残响</span>
+            <span class="em-sub">废土上还能测量的东西</span>
+          </div>
+          <button class="em-close" id="echo-close" aria-label="关闭">✕</button>
+        </header>
+
+        <div class="em-body">
+          <div class="em-stat">
+            <div class="em-num"><b id="echo-now">0</b><i>可支配</i></div>
+            <div class="em-side">
+              <span>共产出 <b id="echo-total">0</b></span>
+              <span>阵列 Lv.<b id="echo-lv">0</b> · 加成 <b id="echo-bonus">×1.00</b></span>
+            </div>
+          </div>
+
+          <!-- 灯塔：建造与升级全部收进弹窗（含研究所架设）。
+               残响面板只有 388px 宽，12 级塔身 + 14 级光环塞不进来；
+               列表化之后会变成一条无限长的滑条，等级关系也就看不见了。
+               这里只留一个入口 + 一行当前状态。 -->
+          <button class="em-array" id="echo-lighthouse">
+            <span class="ea-ico" id="echo-lighthouse-ico"></span>
+            <span class="ea-txt">灯塔</span>
+            <span class="ea-state" id="echo-lighthouse-state">Lv.0</span>
+          </button>
+
+          <!-- 残响升级同样搬进弹窗：它和灯塔光环共用一棵树形的语言，
+               两处各画一套列表只会让"同样的东西有两种长相"。 -->
+          <button class="em-array" id="echo-upgrades">
+            <span class="ea-ico" id="echo-upgrades-ico"></span>
+            <span class="ea-txt">残响升级</span>
+            <span class="ea-state" id="echo-upgrades-state">0/0</span>
+          </button>
+
+          <!-- 里程碑：与「残响升级」并列的另一条纵向线。
+               它不讲"买什么"，讲"这一夜多出了什么"，所以单独一页。 -->
+          <button class="em-array" id="echo-milestone">
+            <span class="ea-ico" id="echo-milestone-ico"></span>
+            <span class="ea-txt">里程碑</span>
+            <span class="ea-state" id="echo-milestone-state">第 1 夜</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ───────── 里程碑：黯淡的命运之轮被能量波拴住 ─────────
+       三层结构，从后往前：
+         1) .ms-wheel  黯淡的命运之轮（被拴住时只能小幅颤动）
+         2) .ms-waves  几道攒着黑点的灰色能量波，从六个方向缠上来
+         3) .ms-card   内容卡片 + 左缘那道金线
+       换天时演出：轮子发光运转 → 波短暂退散 → 转一会儿再缠回来。 -->
+  <div id="ms-modal" role="dialog" aria-modal="true" aria-label="里程碑" aria-hidden="true">
+    <div class="ms-scrim"></div>
+
+    <div class="ms-wheel" aria-hidden="true">
+      <svg viewBox="0 0 400 400">
+        <defs>
+          <radialGradient id="gMsHalo">
+            <stop offset="0%" stop-color="#ffd892" stop-opacity=".13"/>
+            <stop offset="60%" stop-color="#8b8172" stop-opacity=".05"/>
+            <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="gMsCore">
+            <stop offset="0%" stop-color="#ffe7b8" stop-opacity=".9"/>
+            <stop offset="100%" stop-color="#c98a33" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <circle class="ms-halo" cx="200" cy="200" r="196" fill="url(#gMsHalo)"/>
+        <circle class="ms-ignite" cx="200" cy="200" r="70" fill="url(#gMsCore)"/>
+
+        <!-- 三环反向转：与残响面板同一套几何语言，但这里默认是停的、暗的 -->
+        <g class="ms-ring ms-r3">
+          <circle cx="200" cy="200" r="182" fill="none" stroke="currentColor"
+                  stroke-width=".6" opacity=".18" stroke-dasharray="2 10"/>
+          <circle cx="200" cy="200" r="170" fill="none" stroke="currentColor"
+                  stroke-width=".6" opacity=".10"/>
+        </g>
+        <g class="ms-ring ms-r2">
+          <circle cx="200" cy="200" r="150" fill="none" stroke="currentColor"
+                  stroke-width=".8" opacity=".16"/>
+          <g id="ms-spokes" stroke="currentColor" stroke-width=".7" opacity=".18"></g>
+        </g>
+        <g class="ms-ring ms-r1">
+          <circle cx="200" cy="200" r="112" fill="none" stroke="currentColor"
+                  stroke-width=".9" opacity=".22" stroke-dasharray="26 18"/>
+        </g>
+
+        <!-- 能量波：由 JS 生成（数量与点数要跟"退散程度"联动） -->
+        <g id="ms-waves" class="ms-waves" stroke="currentColor" fill="currentColor"></g>
+      </svg>
+    </div>
+
+    <div class="ms-card">
+      <header class="ms-head">
+        <div class="ms-title">
+          <span class="ms-name">里程碑</span>
+          <span class="ms-sub">这一夜，多出了什么</span>
+        </div>
+        <div class="ms-day"><span>当前</span><b id="ms-day">第 1 夜</b></div>
+        <button class="ms-close" id="ms-close" aria-label="关闭">✕</button>
+      </header>
+
+      <div class="ms-body">
+        <!-- 金线：绝对定位在列表左缘，高度由 JS 量到「当前那一夜」的底边 -->
+        <div class="ms-rail" aria-hidden="true">
+          <div class="ms-needle" id="ms-needle">
+            <span class="ms-needle-tip"></span>
+          </div>
+        </div>
+        <div class="ms-list" id="ms-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────── 手机端抽屉（面板搬到这里） ───────── -->
+  <div id="phone-scrim"></div>
+  <section id="phone-sheet" aria-label="面板">
+    <div class="ps-grip"></div>
+    <div class="ps-head">
+      <button class="ps-tab on" data-pane="build">建造 <span class="ps-badge hide" id="ps-badge-build"></span></button>
+      <button class="ps-tab" data-pane="info">检视</button>
+      <button class="ps-tab" data-pane="log">记录</button>
+      <button class="ps-close" id="ps-close" aria-label="关闭">✕</button>
+    </div>
+    <div class="ps-body">
+      <div class="ps-pane on" data-pane="build"></div>
+      <div class="ps-pane" data-pane="info"></div>
+      <div class="ps-pane" data-pane="log"></div>
+    </div>
+  </section>
+
+  <!-- ───────── 手机端菜单 ───────── -->
+  <div id="phone-menu" aria-label="菜单">
+    <div class="pm-title">菜单</div>
+    <button class="pm-item" id="pm-save">
+      <span class="ico" aria-hidden="true">账</span>
+      <span>账号与同步</span><em id="pm-save-state">未登录</em>
+    </button>
+    <button class="pm-item" id="pm-restart">
+      <span class="ico" aria-hidden="true">重</span>
+      <span>重来这一夜</span><em>不返还投入</em>
+    </button>
+    <button class="pm-item" id="pm-home">
+      <span class="ico" aria-hidden="true">首</span>
+      <span>回到封面</span><em>进度自动保存</em>
+    </button>
+  </div>
+
+  <!-- ───────── 侧栏 ───────── -->
+  <aside id="panel">
+    <section class="pn pn-res">
+      <div class="res-item">
+        <span class="ri-ico ri-fw" id="ri-fw"></span>
+        <div class="ri-body">
+          <span class="ri-val" id="res-fw">0</span>
+          <span class="ri-rate" id="res-fw-rate">+0/s</span>
+        </div>
+      </div>
+      <div class="res-item">
+        <span class="ri-ico ri-oil" id="ri-oil"></span>
+        <div class="ri-body">
+          <span class="ri-val" id="res-oil">0</span>
+          <span class="ri-rate" id="res-oil-rate">+0/s</span>
+        </div>
+      </div>
+      <!-- 残响：跨循环保留，放在资源区里，点击即开残响面板（信标上那个入口的另一条路） -->
+      <button class="res-item res-echo" id="res-echo" title="打开残响面板">
+        <span class="ri-ico ri-ec" id="ri-echo"></span>
+        <div class="ri-body">
+          <span class="ri-val" id="res-echo-val">0</span>
+          <span class="ri-rate" id="res-echo-rate">残响</span>
+        </div>
+      </button>
+      <!-- 科技点：跨循环保留，研究所产出的东西 -->
+      <div class="res-item res-tech" id="res-tech">
+        <span class="ri-ico ri-tech" id="ri-tech"></span>
+        <div class="ri-body">
+          <span class="ri-val" id="res-tech-val">0</span>
+          <span class="ri-rate" id="res-tech-rate">科技点</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="pn pn-gauges">
+      <div class="gauge">
+        <svg viewBox="0 0 100 100" class="gauge-svg">
+          <circle class="g-track" cx="50" cy="50" r="38"/>
+          <circle class="g-fill" id="ring-core" cx="50" cy="50" r="38" transform="rotate(-90 50 50)"/>
+        </svg>
+        <div class="gauge-body">
+          <span class="g-num"><b id="ring-core-val">100</b><i id="ring-core-max">/100</i></span>
+          <span class="g-label">信标</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="pn pn-save">
+      <div class="pn-title">
+        存档
+        <span class="sv-badge" id="sv-badge">—</span>
+      </div>
+      <!-- 账号：进度的云端归属。导入/导出已移除 ——
+           它们让任何人拿到一段字符串就能跳夜，等于公开作弊入口。
+           现在只有两条路进来：登录自己的账号，或在开发者模式下取存档值。 -->
+      <div class="sv-row">
+        <button class="sv-btn wide" id="sv-account" title="登录后可跨设备同步">
+          <span class="sv-acc-dot" id="sv-acc-dot"></span>
+          <span id="sv-acc-label">登录账号</span>
+        </button>
+      </div>
+      <!-- 回封面：存档落盘后回到标题页（手机端在菜单里有同一个入口） -->
+      <div class="sv-row">
+        <button class="sv-btn wide" id="sv-cover" title="回到封面">回到封面</button>
+      </div>
+      <p class="sv-note" id="sv-note">进度自动保存在本机，每 15 秒同步一次</p>
+    </section>
+
+    <section class="pn pn-insp">
+      <div class="pn-title">检视</div>
+      <div id="inspector"><div class="ins-empty">把光标移到格子上</div></div>
+    </section>
+
+    <section class="pn pn-log">
+      <div class="pn-title">记录</div>
+      <ol id="log"></ol>
+    </section>
+  </aside>
+
+  <button id="btn-play" title="播放 / 暂停（空格）"></button>
+</div>
+
+</body>
+</html>
