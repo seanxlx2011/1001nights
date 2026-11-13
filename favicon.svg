@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="sky" cx="48%" cy="36%" r="80%">
+      <stop offset="0%" stop-color="#1e2246"/>
+      <stop offset="55%" stop-color="#121530"/>
+      <stop offset="100%" stop-color="#080a16"/>
+    </radialGradient>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffd88f" stop-opacity=".9"/>
+      <stop offset="55%" stop-color="#ffb35c" stop-opacity=".22"/>
+      <stop offset="100%" stop-color="#ffb35c" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="moon" cx="32%" cy="28%" r="76%">
+      <stop offset="0%" stop-color="#fffdf0"/>
+      <stop offset="68%" stop-color="#f0e2bd"/>
+      <stop offset="100%" stop-color="#cfbc92"/>
+    </radialGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffe0a8" stop-opacity=".62"/>
+      <stop offset="100%" stop-color="#ffb35c" stop-opacity=".12"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffb35c" stop-opacity="0"/>
+      <stop offset="20%" stop-color="#ffd894" stop-opacity="1"/>
+      <stop offset="80%" stop-color="#ffd894" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#ffb35c" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 夜空底 -->
+  <rect width="64" height="64" rx="13" fill="url(#sky)"/>
+
+  <!-- 月晕 + 弯月（path 挖缺口，放大也不漏底） -->
+  <circle cx="44.5" cy="16.5" r="14" fill="url(#halo)"/>
+  <path d="M44.8 8.6a8 8 0 1 0 0 16 9.4 9.4 0 0 1 0-16z" fill="url(#moon)"/>
+
+  <!-- 星点 -->
+  <circle cx="13" cy="13" r="1.3" fill="#e6ebff" opacity=".9"/>
+  <circle cx="21.5" cy="21.5" r=".95" fill="#e6ebff" opacity=".6"/>
+  <circle cx="8.5" cy="24" r=".8" fill="#e6ebff" opacity=".45"/>
+
+  <!-- 沙丘地平线 -->
+  <path d="M0 51.5c7-2.4 13-3.6 21-2.8 9 1 15 3.4 23 2.6 8-.8 13-2.8 20-2.2V64H0z" fill="#0b0d1a"/>
+
+  <!-- 灯塔：塔身（亮色实心，保证 16px 下仍有剪影） -->
+  <path d="M26.2 48.6 28.8 31.6h6.4l2.6 17z" fill="#ffd28a"/>
+  <!-- 塔身暗面，增加体积感 -->
+  <path d="M32 31.6h3.2l2.6 17h-5.8z" fill="#e8b46a" opacity=".55"/>
+  <!-- 观景台 -->
+  <rect x="26.9" y="28.4" width="10.2" height="3.6" rx="1.2" fill="#ffd894"/>
+  <!-- 塔灯 + 灯光 -->
+  <circle cx="32" cy="26.6" r="3.4" fill="#fff6d8"/>
+  <path d="M30.4 24.4 22 9.6h18.4L33.6 24.4z" fill="url(#beam)"/>
+
+  <!-- 三道阶梯光环：从塔身向两侧扩散，末端渐隐 -->
+  <path d="M24.5 43.6h15" stroke="url(#ring)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M21 38.6h22" stroke="url(#ring)" stroke-width="1.8" stroke-linecap="round" opacity=".8"/>
+  <path d="M17.4 33.8h29.2" stroke="url(#ring)" stroke-width="1.6" stroke-linecap="round" opacity=".58"/>
+</svg>
